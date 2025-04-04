@@ -53,7 +53,8 @@ const config: Config = {
         'hover-h-bg-gradient': 'linear-gradient(to right, #8e9eab, #eef2f3);',
         'hover-h-bg-gradient-two': 'linear-gradient(to right, #616161, #9bc5c3);',
         'bg-gradient-one': 'linear-gradient(to right, #bdc3c7, #2c3e50);',
-        'bg-gradient-two': 'linear-gradient(to right, #0f2027, #203a43, #2c5364);'
+        'bg-gradient-two': 'linear-gradient(to right, #0f2027, #203a43, #2c5364);',
+        'bg-gradient-three': 'linear-gradient(to right, #bdc3c7, #2c3e50);'
       },
       backgroundSize: {
         '90%': '90%',

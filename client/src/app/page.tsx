@@ -8,7 +8,7 @@ import Loader from "@/components/loader";
 
 
 export default function Home() {
-  const [isLogin, , , loading] = useAuth();
+  const [isLogin,token , , loading] = useAuth();
   const { status } = useBackgroundContext();
   if (loading) {
     return <Loader />;
@@ -17,7 +17,7 @@ export default function Home() {
     <div className={`h-screen min-w-screen overflow-y-auto overflow-x-hidden ${status ? "bg-bg-gradient-two" : "bg-bg-gradient-one"}  relative overflow-y-auto overflow-x-hidden relative `}>
       <Header />
       {
-        isLogin ? <Protected /> : <Public />
+        isLogin ? <Protected token={token || ''} /> : <Public />
       }
     </div>
   );
