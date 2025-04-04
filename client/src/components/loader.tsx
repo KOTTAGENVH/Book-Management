@@ -6,7 +6,7 @@ import React from "react";
 function Loader() {
     const { status } = useBackgroundContext();
     return (
-        <div className={`h-auto md:h-screen min-w-screen overflow-y-auto overflow-x-hidden ${status ? "bg-bg-gradient-two" : "bg-bg-gradient-one"}  relative overflow-y-auto overflow-x-hidden relative `}>
+        <div className={`h-screen min-w-screen overflow-y-auto overflow-x-hidden ${status ? "bg-bg-gradient-two" : "bg-bg-gradient-one"}  relative overflow-y-auto overflow-x-hidden relative `}>
             <div className="flex flex-col items-center justify-center gap-2">
                 <div className="text-white text-lg font-semibold ml-2">
                     Loading

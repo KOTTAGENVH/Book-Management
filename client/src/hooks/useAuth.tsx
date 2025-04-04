@@ -18,7 +18,7 @@ const useAuth = (): [boolean, string | null, typeof keycloak | null, boolean] =>
       } catch (err) {
         console.error("Keycloak init error:", err);
       } finally {
-        setLoading(false); // ✅ mark loading complete
+        setLoading(false); 
       }
     };
 

@@ -18,10 +18,10 @@ const keycloak = new Keycloak({
 let keycloakInitPromise: Promise<Keycloak.KeycloakInstance> | null = null;
 
 export const initKeycloak = async (): Promise<Keycloak.KeycloakInstance> => {
-  // ✅ Already initialized
+  //  Already initialized
   if (keycloakInitPromise) return keycloak;
 
-  // ✅ Create once and reuse
+  // Create once and reuse
   keycloakInitPromise = keycloak.init({
     onLoad: "login-required",
   }).then(() => keycloak);
