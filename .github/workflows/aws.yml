@@ -72,6 +72,9 @@ jobs:
            docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
            echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
       - name: Inject secrets into task definition safely
         run: |
           jq --arg db "${{ secrets.DATABASE_URL }}" \
