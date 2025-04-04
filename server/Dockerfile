@@ -27,7 +27,7 @@ COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/dist ./dist
 
 # Install only production dependencies
-RUN npm install --omit=dev
+RUN npm install 
 
 # Expose the port the app runs on
 EXPOSE 4000
