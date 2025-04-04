@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { IsString, IsInt, IsEmail, Min, Max, Length } from 'class-validator';
+import { IsString, IsInt, Min, Max, Length } from 'class-validator';
 
 export class CreateBookDto {
   @IsString()
@@ -18,7 +18,4 @@ export class CreateBookDto {
   @Min(1000)
   @Max(new Date().getFullYear())
   publicationYear: number;
-
-  @IsEmail()
-  email: string;
 }

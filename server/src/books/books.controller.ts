@@ -40,19 +40,6 @@ export class BooksController {
     }
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string) {
-    try {
-      return await this.booksService.findOne(id);
-    } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw error;
-      }
-      console.log('Error retrieving book', error);
-      throw new InternalServerErrorException('Error retrieving book');
-    }
-  }
-
   @Get('/email')
   async findByEmail(@Req() req: Request) {
     try {
@@ -67,6 +54,19 @@ export class BooksController {
       }
       console.log('Error retrieving book by email', error);
       throw new InternalServerErrorException('Error retrieving book by email');
+    }
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    try {
+      return await this.booksService.findOne(id);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      console.log('Error retrieving book', error);
+      throw new InternalServerErrorException('Error retrieving book');
     }
   }
 

@@ -9,6 +9,7 @@ import React from 'react'
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { faHome } from '@fortawesome/free-solid-svg-icons';
+import MyBooks from '@/components/profile/myBooks';
 
 function Page() {
   const router = useRouter();
@@ -43,6 +44,7 @@ function Page() {
       </div>
 
       <ProfileDash token={token || ''} />
+      <MyBooks token={token || ''} />
     </div>
   )
 }

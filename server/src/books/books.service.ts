@@ -11,9 +11,9 @@ import { PrismaService } from 'prisma/prisma.service';
 export class BooksService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createBookDto: CreateBookDto) {
+  async create(data: CreateBookDto & { email: string }) {
     try {
-      return await this.prisma.book.create({ data: createBookDto });
+      return await this.prisma.book.create({ data });
     } catch (error) {
       console.log('Error creating book', error);
       throw new InternalServerErrorException('Error creating book');
