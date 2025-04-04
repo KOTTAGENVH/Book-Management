@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class ProfileService {
   getProfile(user: { email?: string; firstName?: string; lastName?: string }) {
+    console.log('user', user);
     if (!user.email) {
       throw new Error('User not authenticated');
     }

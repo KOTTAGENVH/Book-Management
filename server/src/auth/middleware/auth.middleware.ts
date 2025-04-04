@@ -42,7 +42,7 @@ export class AuthMiddleware implements NestMiddleware {
     if (!process.env.PUBLIC_KEY) {
       throw new Error('Public key not found');
     }
-    this.publicKey = process.env.PUBLIC_KEY;
+    this.publicKey = `-----BEGIN PUBLIC KEY-----\n${process.env.PUBLIC_KEY}\n-----END PUBLIC KEY-----`;
   }
 
   use(req: Request, res: Response, next: NextFunction) {
@@ -57,10 +57,14 @@ export class AuthMiddleware implements NestMiddleware {
       throw new UnauthorizedException('Authorization header not found');
     }
 
+    // console.log('Auth header:', authHeader);
+
     const token = authHeader.split(' ')[1];
     if (!token) {
       throw new UnauthorizedException('Token not provided');
     }
+
+    // console.log('token:', token);
 
     try {
       const decoded = jwt.verify(token, this.publicKey, {
@@ -70,12 +74,14 @@ export class AuthMiddleware implements NestMiddleware {
       if (!isJwtPayload(decoded)) {
         throw new UnauthorizedException('Invalid token payload');
       }
+      // console.log('[AuthMiddleware] Incoming request:', req.path);
 
       const payload = decoded;
-      console.log('Decoded JWT payload:', payload);
+      // console.log('Decoded JWT payload:', payload);
       if (req.path.startsWith('/books')) {
         req.email = payload.email;
-      } else if (req.path === '/profile') {
+      } else if (req.path.startsWith('/profile')) {
+        // console.log('payload', payload);
         req.email = payload.email;
         req.firstName = payload.given_name;
         req.lastName = payload.family_name;

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import keycloak, { initKeycloak } from "../../config/keycloak";
 
-// Tuple: [isLogin, token, keycloakInstance, isLoading]
 const useAuth = (): [boolean, string | null, typeof keycloak | null, boolean] => {
   const [token, setToken] = useState<string | null>(null);
   const [isLogin, setLogin] = useState<boolean>(false);
