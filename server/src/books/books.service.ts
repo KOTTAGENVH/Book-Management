@@ -42,9 +42,12 @@ export class BooksService {
     }
   }
 
-  async update(id: string, updateBookDto: UpdateBookDto) {
+  async update(id: string, updateBookDto: UpdateBookDto, email: string) {
     try {
-      await this.findOne(id);
+      const book = await this.findOne(id);
+      if (book.email !== email) {
+        throw new NotFoundException('Book not found for this user');
+      }
       return await this.prisma.book.update({
         where: { id },
         data: updateBookDto,
@@ -57,9 +60,12 @@ export class BooksService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string, email: string) {
     try {
-      await this.findOne(id);
+      const book = await this.findOne(id);
+      if (book.email !== email) {
+        throw new NotFoundException('Book not found for this user');
+      }
       return await this.prisma.book.delete({ where: { id } });
     } catch (error) {
       if (error instanceof NotFoundException) {
@@ -71,6 +77,9 @@ export class BooksService {
 
   async findByEmail(email: string) {
     try {
+      if (!email) {
+        throw new NotFoundException('Email is required to find books');
+      }
       const books = await this.prisma.book.findMany({ where: { email } });
       if (books.length === 0) {
         throw new NotFoundException(`No books found for email: ${email}`);

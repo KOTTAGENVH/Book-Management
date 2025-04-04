@@ -8,8 +8,10 @@ import {
   Delete,
   InternalServerErrorException,
   NotFoundException,
+  Req,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
+import { Request } from 'express';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 
@@ -18,9 +20,10 @@ export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
   @Post()
-  async create(@Body() createBookDto: CreateBookDto) {
+  async create(@Body() createBookDto: CreateBookDto, @Req() req: Request) {
     try {
-      return await this.booksService.create(createBookDto);
+      const email = (req as Request & { email: string }).email;
+      return await this.booksService.create({ ...createBookDto, email });
     } catch (error) {
       console.log('Error creating book', error);
       throw new InternalServerErrorException('Error creating book');
@@ -50,9 +53,13 @@ export class BooksController {
     }
   }
 
-  @Get('email/:email')
-  async findByEmail(@Param('email') email: string) {
+  @Get('/email')
+  async findByEmail(@Req() req: Request) {
     try {
+      const email = req.email;
+      if (!email) {
+        throw new NotFoundException('Email is required to find books');
+      }
       return await this.booksService.findByEmail(email);
     } catch (error) {
       if (error instanceof NotFoundException) {
@@ -64,9 +71,17 @@ export class BooksController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateBookDto: UpdateBookDto,
+    @Req() req: Request,
+  ) {
     try {
-      return await this.booksService.update(id, updateBookDto);
+      const email = (req as Request & { email?: string }).email;
+      if (!email) {
+        throw new NotFoundException('Email is required to update a book');
+      }
+      return await this.booksService.update(id, updateBookDto, email);
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw error;
@@ -77,9 +92,13 @@ export class BooksController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string, @Req() req: Request) {
     try {
-      return await this.booksService.remove(id);
+      const email = (req as Request & { email?: string }).email;
+      if (!email) {
+        throw new NotFoundException('Email is required to delete a book');
+      }
+      return await this.booksService.remove(id, email);
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw error;
