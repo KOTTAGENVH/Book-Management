@@ -31,3 +31,4 @@ A simple yet powerful CRUD application for managing a collection of books. This 
 .
 ├── client   # Frontend - Next.js
 └── server   # Backend - NestJS
+<img width="1426" alt="Screenshot 2025-04-05 at 09 22 04" src="https://github.com/user-attachments/assets/84bdfc85-af79-4e0f-a685-c21469276f67" />
