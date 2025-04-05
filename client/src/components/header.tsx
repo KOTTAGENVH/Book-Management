@@ -22,7 +22,7 @@ function Header() {
   const handleLogout = () => {
     if (keycloak) {
       keycloak.logout({
-        redirectUri: "http://localhost:3000/",
+        redirectUri: "https://book-management-eosin.vercel.app/",
       });
     } else {
       console.warn("Keycloak not initialized yet");
