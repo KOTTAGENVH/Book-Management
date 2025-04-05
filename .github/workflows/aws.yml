@@ -75,20 +75,17 @@ jobs:
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Inject secrets into ECS task definition
+      - name: Inject secrets using sed (safe)
         shell: bash
         run: |
-          jq --arg db "${{ secrets.DATABASE_URL }}" \
-             --arg pub "${{ secrets.PUBLIC_KEY }}" \
-             --arg port "${{ secrets.PORT }}" \
-          '.containerDefinitions[0].environment |= map(
-             if .name == "DATABASE_URL" then .value = $db
-             elif .name == "PUBLIC_KEY" then .value = $pub
-             elif .name == "PORT" then .value = $port
-             else .
-             end
-          )' "${{ env.ECS_TASK_DEFINITION }}" > tmp-task-def.json
-          mv tmp-task-def.json "${{ env.ECS_TASK_DEFINITION }}"
+          db_escaped=$(printf '%s\n' "${{ secrets.DATABASE_URL }}" | sed -e 's/[\/&]/\\&/g')
+          pub_escaped=$(printf '%s\n' "${{ secrets.PUBLIC_KEY }}" | sed -e 's/[\/&]/\\&/g')
+          port_escaped=$(printf '%s\n' "${{ secrets.PORT }}" | sed -e 's/[\/&]/\\&/g')
+
+          sed -i "s|REPLACE_DATABASE_URL|$db_escaped|" "${{ env.ECS_TASK_DEFINITION }}"
+          sed -i "s|REPLACE_PUBLIC_KEY|$pub_escaped|" "${{ env.ECS_TASK_DEFINITION }}"
+          sed -i "s|REPLACE_PORT|$port_escaped|" "${{ env.ECS_TASK_DEFINITION }}"
+
 
 
 
