@@ -87,10 +87,11 @@ jobs:
            else .
          end
          )' \
-          "${{ env.ECS_TASK_DEFINITION }}" > tmp-task-def.json
+         "${{ env.ECS_TASK_DEFINITION }}" > tmp-task-def.json
 
          mv tmp-task-def.json "${{ env.ECS_TASK_DEFINITION }}"
-             
+
+
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
