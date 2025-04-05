@@ -34,7 +34,7 @@ env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: book-api
   ECS_SERVICE: book-api-service-v2 
-  ECS_CLUSTER: book-api-cluster
+  ECS_CLUSTER: book-api-services  
   ECS_TASK_DEFINITION: server/.aws/task-definition.json
   CONTAINER_NAME: book-api-container
 
