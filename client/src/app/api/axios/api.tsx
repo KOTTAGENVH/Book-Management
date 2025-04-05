@@ -1,8 +1,9 @@
 /* eslint-disable no-undef */
 import axios from "axios";
-//Api Client
+
+// Api Client
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: "/api", 
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
